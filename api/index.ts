@@ -369,3 +369,5 @@ app.use(webhookCallback(bot, "express"));
 app.get("/", (req: Request, res: Response) => {
   res.send("Bot is running!");
 });
+
+export default app;
