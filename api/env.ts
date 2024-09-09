@@ -1,4 +1,4 @@
-import { StringSession } from "telegram/sessions";
+import { StringSession } from "telegram/sessions/index.js";
 import { z } from "zod";
 
 export const env = z
