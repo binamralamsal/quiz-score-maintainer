@@ -1,5 +1,6 @@
 {
   "name": "quiz_score_maintainer",
+  "type": "module",
   "scripts": {
     "start": "node api/app.js",
     "dev": "bun run --watch api/index.ts",

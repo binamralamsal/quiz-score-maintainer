@@ -4,10 +4,10 @@ import { Bot, webhookCallback } from "grammy";
 import type { Request, Response } from "express";
 import { and, desc, eq, isNotNull, sql } from "drizzle-orm";
 
-import { env } from "./env";
-import { db } from "./drizzle/db";
-import { client } from "./telegram-user.client";
-import { quizzes, scores, users } from "./drizzle/schema";
+import { env } from "./env.js";
+import { db } from "./drizzle/db.js";
+import { client } from "./telegram-user.client.js";
+import { quizzes, scores, users } from "./drizzle/schema.js";
 
 const bot = new Bot(env.BOT_TOKEN);
 
