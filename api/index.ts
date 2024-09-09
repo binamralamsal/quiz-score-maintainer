@@ -1,12 +1,13 @@
-import { Bot, webhookCallback } from "grammy";
-import { env } from "./env";
-import express from "express";
-import type { Request, Response } from "express";
 import crypto from "crypto";
-import { client } from "./telegram-user.client";
+import express from "express";
+import { Bot, webhookCallback } from "grammy";
+import type { Request, Response } from "express";
+import { and, desc, eq, isNotNull, sql } from "drizzle-orm";
+
+import { env } from "./env";
 import { db } from "./drizzle/db";
+import { client } from "./telegram-user.client";
 import { quizzes, scores, users } from "./drizzle/schema";
-import { and, desc, eq, isNotNull, isNull, sql } from "drizzle-orm";
 
 const bot = new Bot(env.BOT_TOKEN);
 
@@ -353,6 +354,9 @@ if (env.NODE_ENV === "development") {
 async function init() {
   await bot.api.setMyCommands([
     { command: "addscore", description: "Add score of a quiz." },
+    { command: "quizboard", description: "Show leaderboard of quiz." },
+    { command: "quiztags", description: "Show quiztags of quiz." },
+    { command: "removescore", description: "Remove score of a quiz." },
   ]);
 }
 
