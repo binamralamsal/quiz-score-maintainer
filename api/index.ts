@@ -25,8 +25,11 @@ bot.command("addscore", async (ctx) => {
       ctx.message.from.id
     );
 
-    if (chatMember.status !== "administrator") {
-      return ctx.reply("Only admins can end the game.");
+    if (
+      chatMember.status !== "administrator" &&
+      chatMember.status !== "creator"
+    ) {
+      return ctx.reply("Only admins of the group can use this command.");
     }
   }
 
@@ -307,8 +310,11 @@ bot.command("removescore", async (ctx) => {
       ctx.message.from.id
     );
 
-    if (chatMember.status !== "administrator") {
-      return ctx.reply("Only admins can end the game.");
+    if (
+      chatMember.status !== "administrator" &&
+      chatMember.status !== "creator"
+    ) {
+      return ctx.reply("Only admins of the group can use this command.");
     }
   }
 
