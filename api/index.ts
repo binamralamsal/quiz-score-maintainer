@@ -17,11 +17,24 @@ bot.command("start", (ctx) => {
 });
 
 bot.command("addscore", async (ctx) => {
+  if (!ctx.message) return;
+
+  if (ctx.chat.type === "group" || ctx.chat.type === "supergroup") {
+    const chatMember = await ctx.api.getChatMember(
+      ctx.chat.id,
+      ctx.message.from.id
+    );
+
+    if (chatMember.status !== "administrator") {
+      return ctx.reply("Only admins can end the game.");
+    }
+  }
+
   const quizTag = ctx.match ? ctx.match.toLowerCase() : null;
   const replyToMessage = ctx.message?.reply_to_message;
   const chatId = ctx.chat.id;
 
-  if (!ctx.message || !replyToMessage) {
+  if (!replyToMessage) {
     return ctx.reply(
       "Please reply to a message including quiz scores of quizbot."
     );
@@ -286,10 +299,23 @@ bot.command("quiztags", async (ctx) => {
 });
 
 bot.command("removescore", async (ctx) => {
+  if (!ctx.message) return;
+
+  if (ctx.chat.type === "group" || ctx.chat.type === "supergroup") {
+    const chatMember = await ctx.api.getChatMember(
+      ctx.chat.id,
+      ctx.message.from.id
+    );
+
+    if (chatMember.status !== "administrator") {
+      return ctx.reply("Only admins can end the game.");
+    }
+  }
+
   const replyToMessage = ctx.message?.reply_to_message;
   const chatId = ctx.chat.id.toString();
 
-  if (!ctx.message || !replyToMessage) {
+  if (!replyToMessage) {
     return ctx.reply(
       "Please reply to a message including quiz scores of quizbot."
     );
