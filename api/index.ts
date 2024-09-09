@@ -64,7 +64,10 @@ bot.command("addscore", async (ctx) => {
 
   const md5Hash = crypto.createHash("md5").update(messageText).digest("hex");
   const quizExists = await db.query.quizzes.findFirst({
-    where: eq(quizzes.resultsHash, md5Hash),
+    where: and(
+      eq(quizzes.resultsHash, md5Hash),
+      eq(quizzes.chatId, chatId.toString())
+    ),
   });
 
   if (quizExists) {
