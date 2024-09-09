@@ -95,21 +95,29 @@ bot.command("addscore", async (ctx) => {
     const score = parseInt(match[2]);
 
     if (user.includes("@")) {
-      await client.connect();
-      const userDetails = await client.getEntity(user.trim());
-      // @ts-expect-error
-      const firstName = userDetails.firstName;
-      // @ts-expect-error
-      const lastName = userDetails.lastName;
-      const fullName = `${firstName}${lastName ? ` ${lastName}` : ""}`;
-      const userId = userDetails.id.toString();
+      try {
+        await client.connect();
+        const userDetails = await client.getEntity(user.trim());
+        // @ts-expect-error
+        const firstName = userDetails.firstName;
+        // @ts-expect-error
+        const lastName = userDetails.lastName;
+        const fullName = `${firstName}${lastName ? ` ${lastName}` : ""}`;
+        const userId = userDetails.id.toString();
 
-      results.push({
-        username: user.trim(),
-        name: fullName,
-        score,
-        userId,
-      });
+        results.push({
+          username: user.trim(),
+          name: fullName,
+          score,
+          userId,
+        });
+      } catch {
+        results.push({
+          username: user.trim(),
+          name: "Deleted Account",
+          score,
+        });
+      }
     } else {
       results.push({ name: user.trim(), score });
     }
