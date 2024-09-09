@@ -112,11 +112,7 @@ bot.command("addscore", async (ctx) => {
           userId,
         });
       } catch {
-        results.push({
-          username: user.trim(),
-          name: "Deleted Account",
-          score,
-        });
+        continue;
       }
     } else {
       results.push({ name: user.trim(), score });
