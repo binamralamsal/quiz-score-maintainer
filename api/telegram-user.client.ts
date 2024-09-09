@@ -1,6 +1,6 @@
 import { TelegramClient } from "telegram";
 import { env } from "./env.js";
-import { LogLevel } from "telegram/extensions/Logger";
+import { LogLevel } from "telegram/extensions/Logger.js";
 
 export const client = new TelegramClient(
   env.STRING_SESSION,
