@@ -204,6 +204,29 @@ bot.command("addscore", async (ctx) => {
   );
 });
 
+bot.command("quizzes", async (ctx) => {
+  const chatId = ctx.chat.id.toString();
+  const quizTag = ctx.match ? ctx.match.toLowerCase() : null;
+
+  const quizzesForChatWithTag = await db
+    .select({
+      title: quizzes.title,
+    })
+    .from(quizzes)
+    .where(
+      and(
+        eq(quizzes.chatId, chatId),
+        quizTag ? eq(quizzes.quizTag, quizTag) : undefined
+      )
+    );
+
+  return ctx.reply(`<blockquote>All Quizzes Part of this group</blockquote>
+    
+${quizzesForChatWithTag
+  .map((quiz, index) => `${index + 1}. ${quiz.title}`)
+  .join("\n")}`);
+});
+
 bot.command("quizboard", async (ctx) => {
   const chatId = ctx.chat.id.toString();
   const quizTag = ctx.match ? ctx.match.toLowerCase() : null;
