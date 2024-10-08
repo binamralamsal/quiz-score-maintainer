@@ -220,11 +220,14 @@ bot.command("quizzes", async (ctx) => {
       )
     );
 
-  return ctx.reply(`<blockquote>All Quizzes Part of this group</blockquote>
+  return ctx.reply(
+    `<blockquote>All Quizzes Part of this group</blockquote>
     
 ${quizzesForChatWithTag
   .map((quiz, index) => `${index + 1}. ${quiz.title}`)
-  .join("\n")}`);
+  .join("\n")}`,
+    { parse_mode: "HTML" }
+  );
 });
 
 bot.command("quizboard", async (ctx) => {
@@ -233,11 +236,11 @@ bot.command("quizboard", async (ctx) => {
 
   if (quizTag) {
     const quizExists = await db.query.quizzes.findFirst({
-      where: eq(quizzes.quizTag, quizTag),
+      where: and(eq(quizzes.quizTag, quizTag), eq(quizzes.chatId, chatId)),
     });
 
     if (!quizExists) {
-      return ctx.reply("No quizzes of given tag exists.");
+      return ctx.reply("No quizzes of given tag exists in this chat.");
     }
   }
 
@@ -384,6 +387,10 @@ async function init() {
     { command: "quizboard", description: "Show leaderboard of quiz." },
     { command: "quiztags", description: "Show quiztags of quiz." },
     { command: "removescore", description: "Remove score of a quiz." },
+    {
+      command: "quizzes",
+      description: "View all quizzes added in this chat..",
+    },
   ]);
 }
 
