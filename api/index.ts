@@ -221,7 +221,9 @@ bot.command("quizzes", async (ctx) => {
     );
 
   return ctx.reply(
-    `<blockquote>All Quizzes Part of this group</blockquote>
+    `<blockquote>All Quizzes part of this group ${
+      quizTag ? `with tag #${quizTag}` : ""
+    }</blockquote>
     
 ${quizzesForChatWithTag
   .map((quiz, index) => `${index + 1}. ${quiz.title}`)
